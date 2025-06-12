@@ -56,18 +56,7 @@ const SAMPLE_JSON = {
           "ui-meta": {
             "text-left": "Consumer Name",
             "text-right": {
-              "value": "John Doe",
-              "type": "VALUE"
-            }
-          }
-        },
-        {
-          "id": "LastBillAmount",
-          "type": "LABEL-LABEL",
-          "ui-meta": {
-            "text-left": "Last Bill Amount",
-            "text-right": {
-              "value": "₹1,250.00",
+              "value": "YASMINABANU ANVARHUSENBHAI KHALIFA",
               "type": "VALUE"
             }
           }
@@ -78,7 +67,7 @@ const SAMPLE_JSON = {
           "ui-meta": {
             "text-left": "Last Bill Date",
             "text-right": {
-              "value": "15-Jan-2024",
+              "value": "2025-03-02",
               "type": "VALUE"
             }
           }
@@ -89,8 +78,31 @@ const SAMPLE_JSON = {
           "ui-meta": {
             "text-left": "Cycle No.",
             "text-right": {
-              "value": "202401",
+              "value": "4",
               "type": "VALUE"
+            }
+          }
+        },
+        {
+          "id": "LastBillAmount",
+          "type": "LABEL-LABEL",
+          "ui-meta": {
+            "text-left": "Last Bill Amount",
+            "text-right": {
+              "value": "2735.73",
+              "type": "VALUE"
+            }
+          }
+        },
+        {
+          "id": "AmountToBePaid",
+          "type": "LABEL-INPUT",
+          "ui-meta": {
+            "label-text": "Amount to be Paid",
+            "input-hint": "2735.73",
+            "input-constraints": {
+              "input-type": "number",
+              "input-error-message": "Please enter valid amount"
             }
           }
         },

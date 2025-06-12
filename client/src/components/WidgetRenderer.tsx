@@ -56,16 +56,16 @@ function renderLabelInput(widget: Widget, onInputChange: (value: string) => void
         {meta['label-text'] || 'Input'}
       </Label>
       <Input
-        type="text"
-        className="w-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        type={(constraints as any)['input-type'] === 'number' ? 'number' : 'text'}
+        className="w-full focus:ring-2 focus:ring-blue-500 focus:border-transparent border-2 border-gray-300 rounded-lg p-3"
         placeholder={meta['input-hint'] || ''}
-        minLength={constraints.minLen}
-        maxLength={constraints.maxLen}
+        minLength={(constraints as any).minLen}
+        maxLength={(constraints as any).maxLen}
         onChange={(e) => onInputChange(e.target.value)}
       />
-      {constraints['input-error-message'] && (
+      {(constraints as any)['input-error-message'] && (
         <div className="text-sm text-red-600 hidden" data-error-msg>
-          {constraints['input-error-message']}
+          {(constraints as any)['input-error-message']}
         </div>
       )}
     </div>
@@ -75,7 +75,7 @@ function renderLabelInput(widget: Widget, onInputChange: (value: string) => void
 function renderButton(widget: Widget, onClick: () => void) {
   const meta = widget['ui-meta'] || {};
   const text = meta.text || {};
-  const buttonText = text.value || 'Button';
+  const buttonText = (text as any)?.value || 'Button';
 
   return (
     <Button
@@ -92,30 +92,67 @@ function renderLabelLabel(widget: Widget) {
   const meta = widget['ui-meta'] || {};
   const leftText = meta['text-left'] || '';
   const rightValue = meta['text-right'] || {};
-  const rightText = rightValue.value || '';
+  const rightText = rightValue?.value || '';
 
   return (
-    <div className="flex justify-between items-center py-2 border-b border-gray-100" data-widget-id={widget.id}>
-      <span className="text-sm font-medium text-gray-700">{leftText}</span>
-      <span className="text-sm text-gray-900">{rightText}</span>
+    <div className="flex justify-between items-start py-3" data-widget-id={widget.id}>
+      <span className="text-sm font-medium text-gray-700 min-w-0 flex-shrink-0 mr-4">{leftText}</span>
+      <span className="text-sm text-gray-900 text-right min-w-0 break-words">{rightText}</span>
     </div>
   );
 }
 
 function renderPaymentButtons(widget: Widget) {
   return (
-    <div className="space-y-3 pt-4" data-widget-id={widget.id}>
-      <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-medium transition-colors duration-200">
-        Pay Full Amount
-      </Button>
-      {widget['split-payment'] && (
-        <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors duration-200">
-          Pay Partial Amount
-        </Button>
-      )}
-      <Button className="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium transition-colors duration-200">
-        View Receipt
-      </Button>
+    <div className="pt-4" data-widget-id={widget.id}>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+          <div className="w-8 h-8 bg-blue-500 rounded mb-2 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <rect x="2" y="6" width="16" height="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-gray-700">CARD</span>
+        </div>
+        
+        <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+          <div className="w-8 h-8 bg-gray-600 rounded mb-2 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <rect x="2" y="2" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <rect x="4" y="4" width="3" height="3" fill="currentColor"/>
+              <rect x="13" y="4" width="3" height="3" fill="currentColor"/>
+              <rect x="4" y="13" width="3" height="3" fill="currentColor"/>
+              <rect x="8" y="8" width="4" height="4" fill="currentColor"/>
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-gray-700">QR</span>
+        </div>
+        
+        <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+          <div className="w-8 h-8 bg-green-500 rounded mb-2 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <rect x="3" y="6" width="14" height="8" rx="1" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <circle cx="6" r="1" cy="10"/>
+              <circle cx="10" r="1" cy="10"/>
+              <circle cx="14" r="1" cy="10"/>
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-gray-700">CASH</span>
+        </div>
+        
+        <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+          <div className="w-8 h-8 bg-blue-400 rounded mb-2 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <rect x="2" y="4" width="16" height="12" rx="1" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <line x1="2" y1="7" x2="18" y2="7" stroke="currentColor" strokeWidth="1"/>
+              <line x1="2" y1="10" x2="10" y2="10" stroke="currentColor" strokeWidth="1"/>
+              <line x1="2" y1="13" x2="8" y2="13" stroke="currentColor" strokeWidth="1"/>
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-gray-700">CHEQUE</span>
+        </div>
+      </div>
     </div>
   );
 }
