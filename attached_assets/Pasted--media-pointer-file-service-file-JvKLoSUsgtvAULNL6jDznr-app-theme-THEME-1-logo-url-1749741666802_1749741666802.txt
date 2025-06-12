@@ -1,0 +1,187 @@
+[media pointer="file-service://file-JvKLoSUsgtvAULNL6jDznr"]
+{
+  "app-theme": "THEME_1",
+  "logo-url": "http://www.dummy-image-url.com/1.png",
+  "schemaVersion": "1.0",
+  "screens": [
+    {
+      "id": "s0",
+      "heading-text": "Gujrat Urja Vikas Nigam Ltd",
+      "is_main": true,
+      "widgets": [
+        {
+          "id": "ConsumerCode",
+          "type": "LABEL-INPUT",
+          "ui-meta": {
+            "label-text": "Consumer ID",
+            "input-hint": "Enter valid Consumer ID",
+            "input-constraints": {
+              "input-type": "string",
+              "minLen": 5,
+              "custom-constraint": null,
+              "maxLen": 12,
+              "input-error-message": "Invalid Consumer Code"
+            }
+          },
+          "targets": [
+            {
+              "key": "consno",
+              "target": "GUVNL_Fetch_details",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            },
+            {
+              "key": "externalRefs.consID",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            }
+          ]
+        },
+        {
+          "id": "fetchBtn",
+          "type": "BUTTON",
+          "ui-meta": {
+            "text": {
+              "value": "Submit",
+              "type": "VALUE"
+            }
+          },
+          "targets": [
+            {
+              "key": null,
+              "target": "GUVNL_Fetch_details",
+              "type": "API",
+              "params": null,
+              "id": null
+            },
+            {
+              "target": "ConsDetails",
+              "key": null,
+              "type": "NAVIGATION",
+              "params": null,
+              "id": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ConsDetails",
+      "heading-text": "Gujrat Urja Vikas Nigam Ltd",
+      "is_main": false,
+      "widgets": [
+        {
+          "id": "ConsumerCode",
+          "type": "LABEL-LABEL",
+          "hidden": false,
+          "ui-meta": {
+            "text-left": "Consumer Name",
+            "text-right": {
+              "value": "GUVNL_Fetch_details_RESPONSE[0].payload.CONS_NAME",
+              "type": "STORE"
+            }
+          },
+          "targets": [
+            {
+              "key": "externalRefs.Name",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            }
+          ]
+        },
+        {
+          "id": "LastBillAmount",
+          "type": "LABEL-LABEL",
+          "hidden": false,
+          "ui-meta": {
+            "text-left": "Last Bill Amount",
+            "text-right": {
+              "value": "GUVNL_Fetch_details_RESPONSE[0].payload.LAST_BILL_AMOUNT",
+              "type": "STORE"
+            }
+          },
+          "targets": [
+            {
+              "key": "txnAmount",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            },
+            {
+              "key": "externalRefs.LastBillAmount",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            }
+          ]
+        },
+        {
+          "id": "LastBillDate",
+          "type": "LABEL-LABEL",
+          "hidden": false,
+          "ui-meta": {
+            "text-left": "Last Bill Date",
+            "text-right": {
+              "value": "GUVNL_Fetch_details_RESPONSE[0].payload.LAST_BILL_DATE",
+              "type": "STORE"
+            }
+          },
+          "targets": [
+            {
+              "key": "externalRefs.LastBillDate",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            }
+          ]
+        },
+        {
+          "id": "CycleNo",
+          "type": "LABEL-LABEL",
+          "hidden": false,
+          "ui-meta": {
+            "text-left": "Cycle No.",
+            "text-right": {
+              "value": "GUVNL_Fetch_details_RESPONSE[0].payload.CYC_NO",
+              "type": "STORE"
+            }
+          },
+          "targets": [
+            {
+              "key": "externalRefs.CycleNo",
+              "target": "API_TRANSACTION",
+              "type": "STORE",
+              "params": null,
+              "id": null
+            }
+          ]
+        },
+        {
+          "id": "paymentButtons",
+          "type": "PAYMENT_BUTTONS",
+          "split-payment": true,
+          "hidden": false,
+          "ui-meta": null,
+          "targets": [
+            {
+              "target": "printscreenWater",
+              "key": null,
+              "type": "NAVIGATION"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+look at above picture and look at json, I want to create a framework that with such json we can create screens. These screens are for debugging . MY IDEA is to render live screen with this json, anything I change in json should reflect onto screens. 
